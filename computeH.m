@@ -13,10 +13,8 @@ function H = computeH(im1_pts, im2_pts)
         
     ];
 
-    %H = transpose(A) * A;
-
-    [a, b] = eig(transpose(A) * A);
-    h = a(:, 1);
+    [eigenvector, eigenvalue] = eig(transpose(A) * A);
+    h = eigenvector(:, 1);
     h = h / norm(h, 2);
     h = transpose(h);
     top = h(1:3);
@@ -28,12 +26,6 @@ function H = computeH(im1_pts, im2_pts)
         top;
         middle;
         bottom;
-    ];
-     
- 
-
-%ax(?x1, ?y1, ?1, 0, 0, 0, x?2*x1, x?2*y1, x?2)T (11)
-%ay(0,0,0,?x1,?y1,?1,y2?*x1,y2?*y1,y2? )T .
-    
+    ]; 
 end
 
