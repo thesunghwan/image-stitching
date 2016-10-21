@@ -10,9 +10,11 @@ li_gray = rgb2gray(left_image);
 ci_gray = rgb2gray(center_image);
 ri_gray = rgb2gray(right_image);
 
+[fl, dl] = vl_sift(single(ci_gray));
 [fc, dc] = vl_sift(single(ci_gray));
 [fr, dr] = vl_sift(single(ri_gray));
 
+[matches_cl, scores_cl] = vl_ubcmatch(dc, dl);
 [matches_cr, scores_cr] = vl_ubcmatch(dc, dr);
 
 
@@ -22,11 +24,9 @@ ri_gray = rgb2gray(right_image);
 max_H = [];
 max_vote = 0;
 
-for m = 1:10
+for m = 1:100
     positions_to_pick = randperm(size(matches_cr, 2), 4);
     four_random_matches = matches_cr(:, positions_to_pick);
-
-    %disp(four_random_matches(1,:));
 
     four_points_from_center = zeros(4, 2, 'double');
     four_points_from_right = zeros(4, 2, 'double');
@@ -61,12 +61,14 @@ for m = 1:10
     if vote > max_vote
         max_vote = vote;
         max_H = H;
-    end 
+    end
 end
 
+bbox = [-400 1200 -200 700];
+reference_image = vgg_warp_H(single(center_image), eye(3), 'linear', bbox);
+compared_image = vgg_warp_H(single(right_image), max_H, 'linear', bbox);
 
-
-
+imshow(double(max(compared_image,reference_image))/255);
 
 
 
