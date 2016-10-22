@@ -19,7 +19,7 @@ function matches = match_descriptors( reference_descriptors, comparison_descript
             end
         end
         ratio = second_min_distance / best_min_distance;
-        if ratio > threshold;
+        if ratio >= threshold;
             temp = [temp best_min_distance_index];
         end
     end
