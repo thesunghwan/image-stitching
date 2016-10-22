@@ -2,7 +2,6 @@ function [ features, descriptors ] = find_features_and_descriptor(detector_name,
     if strcmp(detector_name, 'SIFT') && strcmp(descriptor_name, 'SIFT')
         [features, descriptors] = vl_sift(single(gray_scale_image));
     elseif strcmp(detector_name, 'harris corner') && strcmp(descriptor_name, 'template')
-        %gray_scale_image = imgaussfilt(gray_scale_image,2);
         corners = detectHarrisFeatures(gray_scale_image);
         corners = corners.selectStrongest(300);
         points = transpose(corners.Location);
@@ -31,15 +30,14 @@ function [ features, descriptors ] = find_features_and_descriptor(detector_name,
         end
     elseif strcmp(detector_name, 'harris corner') && strcmp(descriptor_name, 'SIFT')
         corners = detectHarrisFeatures(gray_scale_image);
-        corners = corners.selectStrongest(100);
+        corners = corners.selectStrongest(200);
         points = transpose(corners.Location);
         harris_features = [
             points;
-            repmat(10,1,size(points, 2));
-            zeros(1, size(points, 2));
+            10 * ones(1, size(points, 2));
+            zeros(1, size(points,2))
         ];
-        [features, descriptors] = vl_sift(single(gray_scale_image), 'frames', harris_features);
-        %[features, descriptors] = vl_sift(single(gray_scale_image), 'frames', harris_features, 'orientations');
+        [features, descriptors] = vl_sift(single(gray_scale_image), 'frames', double(harris_features), 'orientations');
     else
         disp('The combination of detector and desriptor you provided is not allowed.');
     end

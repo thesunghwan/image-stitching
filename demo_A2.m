@@ -18,12 +18,12 @@ ri_gray = rgb2gray(right_image);
 %The second argument is descriptor name to use. One of 'template', 'SIFT'
 %The combinations allowed are harris cornor - template, harris corner -
 %SIFT, SIFT-SIFT
-[fl, dl] = find_features_and_descriptor('harris corner', 'template', li_gray);
-[fc, dc] = find_features_and_descriptor('harris corner', 'template', ci_gray);
-[fr, dr] = find_features_and_descriptor('harris corner', 'template', ri_gray);
-%[fl, dl] = find_features_and_descriptor('harris corner', 'SIFT', li_gray);
-%[fc, dc] = find_features_and_descriptor('harris corner', 'SIFT', ci_gray);
-%[fr, dr] = find_features_and_descriptor('harris corner', 'SIFT', ri_gray);
+%[fl, dl] = find_features_and_descriptor('harris corner', 'template', li_gray);
+%[fc, dc] = find_features_and_descriptor('harris corner', 'template', ci_gray);
+%[fr, dr] = find_features_and_descriptor('harris corner', 'template', ri_gray);
+[fl, dl] = find_features_and_descriptor('harris corner', 'SIFT', li_gray);
+[fc, dc] = find_features_and_descriptor('harris corner', 'SIFT', ci_gray);
+[fr, dr] = find_features_and_descriptor('harris corner', 'SIFT', ri_gray);
 %[fl, dl] = find_features_and_descriptor('SIFT', 'SIFT', li_gray);
 %[fc, dc] = find_features_and_descriptor('SIFT', 'SIFT', ci_gray);
 %[fr, dr] = find_features_and_descriptor('SIFT', 'SIFT', ri_gray);
