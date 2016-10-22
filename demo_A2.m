@@ -27,8 +27,14 @@ ri_gray = rgb2gray(right_image);
 %End matching descriptors
 
 %Begin RANSAC and find Homography
-H_cl = ransac(matches_cl, fc, fl, 300, 200, 3);
-H_cr = ransac(matches_cr, fc, fr, 300, 200, 3);
+%arg1 = matches matrix with indices of matched element,
+%arg2 = features positions matrix of reference image, 2 by n matrix. (x, y)T
+%arg3 = features positions matrix of comparison image, 2 by n matrix. (x, y)T
+%arg4 = number of ransac process
+%arg5 = number of voiting cound
+%arg6 = error threshold between p-prime and p
+H_cl = ransac(matches_cl, fc, fl, 100, 300, 3);
+H_cr = ransac(matches_cr, fc, fr, 100, 300, 3);
 %end RANSAC
 
 %Warp Images
