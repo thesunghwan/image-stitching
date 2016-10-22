@@ -14,7 +14,7 @@ ri_gray = rgb2gray(right_image);
 %Begin finding features and descriptors
 %The first returned variable is features the second returned variable is
 %descriptors.
-%The first argument is dectector name to use. One of 'Harrison Corner', 'SIFT'
+%The first argument is dectector name to use. One of 'harris corner', 'SIFT'
 %The second argument is descriptor name to use. One of 'template', 'SIFT'
 [fl, dl] = find_features_and_descriptor('SIFT', 'SIFT', li_gray);
 [fc, dc] = find_features_and_descriptor('SIFT', 'SIFT', ci_gray);
@@ -22,9 +22,14 @@ ri_gray = rgb2gray(right_image);
 %End finding features and descriptors
 
 %Begin matching descriptors
-[matches_cl, scores_cl] = vl_ubcmatch(dc, dl);
-[matches_cr, scores_cr] = vl_ubcmatch(dc, dr);
+%matches_cl = vl_ubcmatch(dc, dl);
+matches_cl = match_descriptors(dc, dl, 1.55);
+
+%matches_cr = vl_ubcmatch(dc, dr);
+matches_cr = match_descriptors(dc, dr, 1.55);
+
 %End matching descriptors
+
 
 %Begin RANSAC and find Homography
 %arg1 = matches matrix with indices of matched element,
@@ -33,8 +38,8 @@ ri_gray = rgb2gray(right_image);
 %arg4 = number of ransac process
 %arg5 = number of voiting cound
 %arg6 = error threshold between p-prime and p
-H_cl = ransac(matches_cl, fc, fl, 100, 300, 3);
-H_cr = ransac(matches_cr, fc, fr, 100, 300, 3);
+H_cl = ransac(matches_cl, fc, fl, 100, 1000, 3);
+H_cr = ransac(matches_cr, fc, fr, 100, 1000, 3);
 %end RANSAC
 
 %Warp Images

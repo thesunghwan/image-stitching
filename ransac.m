@@ -1,4 +1,4 @@
-function result = ransac( matches, reference_points, compared_points, ransac_count, inlier_count, error)
+function result = ransac( matches, reference_points, compared_points, ransac_count, max_inlier_count, error)
     max_H = [];
     max_vote = 0;
 
@@ -14,8 +14,13 @@ function result = ransac( matches, reference_points, compared_points, ransac_cou
         end
 
         H = computeH(four_points_in_reference, four_points_in_compared);
-
-        test_trial_number = inlier_count;
+        
+        matches_column_size = size(matches, 2);
+        
+        test_trial_number = matches_column_size;
+        if(max_inlier_count < matches_column_size)
+            test_trial_number = max_inlier_count;
+        end
 
         matched_pairs_to_test = matches(:, randperm(size(matches, 2), test_trial_number));
 
