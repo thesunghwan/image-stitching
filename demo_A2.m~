@@ -15,7 +15,7 @@ ri_gray = rgb2gray(right_image);
 %The first returned variable is features the second returned variable is
 %descriptors.
 %The first argument is dectector name to use. One of 'Harrison Corner', 'SIFT'
-%The second argument is descriptor name to use. One of 'template', 'SIFT'
+
 [fl, dl] = find_features_and_descriptor('SIFT', 'SIFT', li_gray);
 [fc, dc] = find_features_and_descriptor('SIFT', 'SIFT', ci_gray);
 [fr, dr] = find_features_and_descriptor('SIFT', 'SIFT', ri_gray);
